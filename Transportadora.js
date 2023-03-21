@@ -1,101 +1,74 @@
 class Transportadora {
     constructor() {
         this._transportadora;
+        this._data;
     }
 
-    /**
+     /**
      * @param {{ id: number; name: string }} objTransportadora
      */
     set setTransportadora (objTransportadora) {
         this._transportadora = objTransportadora
     }
 
+    
+     /**
+     * @param {{ id: Array }} arrIds
+     */
+    set setIds (arrIds) {
+        this._ids = arrIds
+    }
+
+    /**
+     * @param {string} data
+     */
+    set setData(data) {
+        this._data = data;
+    }
+
     get getTransportadora () {
         return this._transportadora
     }
 
-    getTransportadoraByValue (valor) {
-        const objTransportadora = {
-            id: 1,
-            name: 'Correios',
-            frete: 12.9,
-            tempo: '12 dias'
-        }
-  
-        this.setTransportadora = objTransportadora;
+    get getIds () {
+        return this._ids
+    }
 
-        const transportadora = this.getTransportadora;
+    get getData() {
+        return this._data;
+    }
+
+    async retrive() {
+        const data = this.getData || '';
+        const ids = this.getIds || '';
+        let query = ''
         let result = '';
 
+        if (data) query = `?q=${data}`;
+        
+        ids.map((id, index) => {
+            let concat = index == 0 ? '?' : '&';
+            query += `${concat}id=${id}`
+        });
+
         try {
-            if(Object.values(transportadora).includes(valor)) {
+            const response = await fetch(`http://localhost:3000/transportadora${query}`);
+            const json = await response.json();
 
-                result = {
-                    transportadora,
-                    status: 200,
-                    success: true
-                };
+            result = {
+                json,
+                status: 200
+            };
 
-            } else {
-
-                result = {
-                    status: 404,
-                    success: false
-                };
-
-            }
         } catch (err) {
+
             result = {
                 err,
-                success: false
+                status: 500
             };
-        }
+
+        }       
 
         return result;
     }
-
-    getAllTransportadora () {
-        const randomIdCorreios = this.getRandomId();
-        const randomIdLoggi = this.getRandomId();
-
-        const objTransportadora = [
-            {
-                id: randomIdCorreios,
-                name: 'Correios',
-                frete: 12.9,
-                tempo: 4
-            },
-            {
-                id: randomIdLoggi,
-                name: 'Loggi',
-                frete: 11,
-                tempo: 10
-            }
-        ]
-  
-        this.setTransportadora = objTransportadora;
-
-        const transportadora = this.getTransportadora;
-        let result = '';
-
-        try {
-            result = {
-                transportadora,
-                status: 200,
-                success: true
-            };
-        } catch (err) {
-            result = {
-                err,
-                success: false
-            };
-        }
-
-        return result;
-    }
-
-    getRandomId() {
-        return Math.random();
-    }
-  
 }

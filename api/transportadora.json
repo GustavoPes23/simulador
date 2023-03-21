@@ -1,0 +1,16 @@
+{
+    "transportadora": [
+        {
+            "id": 1,
+            "name": "Correios",
+            "frete": 12.9,
+            "tempo": 4
+        },
+        {
+            "id": 2,
+            "name": "Loggi",
+            "frete": 11,
+            "tempo": 10
+        }
+    ]
+}
