@@ -2,7 +2,7 @@ const createTransportadora = props => {
     const { id, name, tempo, frete } = props;
 
     return `
-    <a href="${id}">
+    <a class="card-transportadora-each" data-id="${id}">
         <div class="card mb-2">
             <div class="card-body">
                 <div class="row justify-content-between">

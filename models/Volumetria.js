@@ -39,7 +39,9 @@ class Volumetria {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/volumetria${query}`);
+            const response = await fetch(`http://localhost:3000/volumetria${query}`, {
+                method: 'GET'
+            });
             const json = await response.json();
 
             result = {
